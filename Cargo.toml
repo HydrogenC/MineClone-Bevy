@@ -1,0 +1,11 @@
+[package]
+name = "BevyGame"
+version = "0.1.0"
+authors = ["ExMatics HydrogenC <x13989@126.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bevy = {path="../../Source/bevy", features=["render"]}
+bevy_rapier3d = { version = "*", features = [ "simd-stable", "parallel" ] }
