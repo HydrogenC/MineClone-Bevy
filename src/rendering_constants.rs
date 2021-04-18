@@ -32,15 +32,3 @@ pub const UVS: [[f32; 2]; 4] = [
     [1.0, 0.0],
     [1.0, 1.0]
 ];
-
-pub fn unit_x() -> Vec3 {
-    Vec3::new(1., 0., 0.)
-}
-
-pub fn unit_y() -> Vec3 {
-    Vec3::new(0., 1., 0.)
-}
-
-pub fn unit_z() -> Vec3 {
-    Vec3::new(0., 0., 1.)
-}

@@ -1,7 +1,20 @@
+// Copied from https://github.com/sburris0/bevy_flycam/blob/master/src/lib.rs
+use bevy::app::{Events, ManualEventReader};
 use bevy::input::mouse::MouseMotion;
 use bevy::prelude::*;
-use bevy::app::{Events, ManualEventReader};
-use crate::rendering_constants::*;
+
+fn unit_x() -> Vec3 {
+    Vec3::new(1., 0., 0.)
+}
+fn unit_y() -> Vec3 {
+    Vec3::new(0., 1., 0.)
+}
+
+//Allowed in case of future impl.
+#[allow(dead_code)]
+fn unit_z() -> Vec3 {
+    Vec3::new(0., 0., 1.)
+}
 
 /// Keeps track of mouse motion events, pitch, and yaw
 #[derive(Default)]
@@ -21,7 +34,7 @@ impl Default for MovementSettings {
     fn default() -> Self {
         Self {
             sensitivity: 0.00012,
-            speed: 8.,
+            speed: 12.,
         }
     }
 }
@@ -42,11 +55,12 @@ fn initial_grab_cursor(mut windows: ResMut<Windows>) {
 
 /// Spawns the `Camera3dBundle` to be controlled
 fn setup_player(mut commands: Commands) {
-    commands.spawn_bundle(PerspectiveCameraBundle {
-            transform: Transform::from_xyz(-2.0, 72.0, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
+    commands
+        .spawn_bundle(PerspectiveCameraBundle {
+            transform: Transform::from_xyz(-2.0, 5.0, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
             ..Default::default()
         })
-        .with::<FlyCam>();
+        .insert(FlyCam);
 }
 
 /// Handles keyboard input and movement
@@ -60,7 +74,7 @@ fn player_move(
     let window = windows.get_primary().unwrap();
     for (_camera, mut transform) in query.iter_mut() {
         let mut velocity = Vec3::ZERO;
-        let local_z=transform.local_z();
+        let local_z = transform.local_z();
         let forward = -Vec3::new(local_z.x, 0., local_z.z);
         let right = Vec3::new(local_z.z, 0., -local_z.x);
 

@@ -7,13 +7,12 @@ extern crate bevy;
 extern crate bevy_rapier3d;
 
 use bevy::prelude::*;
-use bevy::render::pipeline::{PrimitiveTopology, RenderPipeline};
 use bevy::render::mesh::Indices;
-use crate::rendering_constants::*;
 use crate::fly_cam::*;
 use crate::chunk_mesh_builder::ChunkMeshBuilder;
 use crate::chunk::Chunk;
 
+#[allow(non_snake_case)]
 fn main() {
     App::build()
         .insert_resource(Msaa { samples: 4 })
@@ -37,8 +36,8 @@ fn setup(
         ..Default::default()
     });
 
-    let mut chunk=Chunk::new();
-    let texture_handle=asset_server.load("dirt.png");
+    let chunk = Chunk::new();
+    let texture_handle = asset_server.load("dirt.png");
     let white_material = materials.add(StandardMaterial {
         base_color_texture: Some(texture_handle.clone()),
         unlit: false,
@@ -49,7 +48,7 @@ fn setup(
     commands.spawn_bundle(PbrBundle {
         mesh: meshes.add(chunk.build_mesh()),
         material: white_material.clone(),
-        transform: Transform::from_xyz(1.0, 0.5, 0.0),
+        transform: Transform::from_xyz(0., 0., 0.),
         ..Default::default()
     });
 }
